@@ -1,0 +1,12 @@
+#!/bin/sh -ex
+set -o noclobber
+VERSION="${VERSION:-$(curl -s https://github.com/mikefarah/yq/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
+cd "$(mktemp -d)"
+trap "rm -r $PWD" EXIT
+curl -Ls "https://github.com/mikefarah/yq/releases/download/${VERSION}/yq_Linux_amd64.tar.gz" | tar xvz
+mv yq_linux_amd64 yq
+chmod 755 yq
+chmod 644 yq.1
+mkdir -p /usr/local/bin /usr/local/share/man/man1
+mv yq /usr/local/bin/
+mv yq.1 /usr/local/share/man/man1/
