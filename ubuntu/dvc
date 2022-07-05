@@ -1,0 +1,7 @@
+#!/bin/sh -ex
+set -o noclobber
+VERSION="${VERSION:-$(curl -s https://github.com/iterative/dvc/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
+DEB="dvc_${VERSION}_amd64.deb"
+trap 'rm "/tmp/$DEB"' EXIT
+curl -Ls -o "/tmp/$DEB" "https://github.com/iterative/dvc/releases/download/${VERSION}/$DEB" 
+apt-get install -y "/tmp/${DEB}"
