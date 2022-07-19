@@ -4,7 +4,7 @@ ARCH=x86_64
 VERSION="${VERSION:-$(curl -s https://github.com/jesseduffield/lazydocker/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
 cd "$(mktemp -d)"
 trap "rm -r $PWD" EXIT
-curl -Ls "https://github.com/jesseduffield/lazydocker/releases/download/$VERSION/lazydocker_${VERSION:1}_Linux_$ARCH.tar.gz" | tar xz
+curl -Ls "https://github.com/jesseduffield/lazydocker/releases/download/$VERSION/lazydocker_${VERSION#v}_Linux_$ARCH.tar.gz" | tar xz
 mkdir -p /usr/local/bin /usr/local/share/doc/lazydocker
 chmod 755 lazydocker
 chmod 644 README.md LICENSE
