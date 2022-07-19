@@ -3,5 +3,6 @@ set -o noclobber
 DOCKER_CONFIG=/usr/libexec/docker
 VERSION="${VERSION:-$(curl -s https://github.com/docker/compose/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
 OUTPUT="$DOCKER_CONFIG/cli-plugins/docker-compose"
+mkdir -p "$DOCKER_CONFIG/cli-plugins"
 curl -Ls "https://github.com/docker/compose/releases/download/${VERSION}/docker-compose-linux-x86_64" > "$OUTPUT"
 chmod 755 "$OUTPUT"
