@@ -1,0 +1,32 @@
+#!/bin/sh
+set -exu
+apt-get update
+apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+cat <<EOF
+***********************************************************
+
+Note that dockerd is by default running in root mode.
+
+Consider running dockerd in rootless mode as it enables a
+local development workflow.
+
+systemctl disable --now docker.service
+systemctl disable --now docker.socket
+systemctl disable --now containerd.service
+
+dockerd-rootless-setuptool.sh install
+
+***********************************************************
+EOF
