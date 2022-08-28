@@ -1,0 +1,8 @@
+#!/bin/sh -ex
+set -o noclobber
+VERSION="${VERSION:-$(curl -s https://github.com/genuinetools/img/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
+cd "$(mktemp -d)"
+trap "rm -r $PWD" EXIT
+curl -Ls -o img "https://github.com/genuinetools/img/releases/download/${VERSION}/img-linux-amd64"
+chmod 755 img
+mv img /usr/local/bin/
