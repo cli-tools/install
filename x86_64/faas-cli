@@ -1,0 +1,8 @@
+#!/bin/sh -ex
+set -exu -o noclobber
+VERSION="${VERSION:-$(curl -s https://github.com/openfaas/faas-cli/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
+cd "$(mktemp -d)"
+trap "rm -r $PWD" EXIT
+curl -o faas-cli -Ls "https://github.com/openfaas/faas-cli/releases/download/${VERSION}/faas-cli"
+chmod 755 faas-cli
+mv faas-cli /usr/local/bin/
