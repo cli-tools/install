@@ -1,0 +1,8 @@
+#!/bin/sh -ex
+set -exu -o noclobber
+VERSION="${VERSION:-$(curl -s https://github.com/openfaas/faasd/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
+cd "$(mktemp -d)"
+trap "rm -r $PWD" EXIT
+curl -o faasd -Ls "https://github.com/openfaas/faasd/releases/download/${VERSION}/faasd"
+chmod 755 faasd
+mv faasd /usr/local/bin/
