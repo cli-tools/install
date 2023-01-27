@@ -3,7 +3,7 @@ set -o noclobber
 VERSION="${VERSION:-$(curl -s https://github.com/derailed/k9s/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
 cd "$(mktemp -d)"
 trap "rm -r $PWD" EXIT
-curl -Ls "https://github.com/derailed/k9s/releases/download/${VERSION}/k9s_Linux_x86_64.tar.gz" | tar xz
+curl -Ls "https://github.com/derailed/k9s/releases/download/${VERSION}/k9s_Linux_amd64.tar.gz" | tar xz
 mkdir -p /usr/local/bin /usr/local/share/doc/k9s
 cp k9s /usr/local/bin/
 cp README.md LICENSE /usr/local/share/doc/k9s/
