@@ -1,0 +1,11 @@
+#!/bin/sh -ex
+set -o noclobber
+ORG=kubernetes-sigs
+REPO=kustomize
+VERSION="${VERSION:-$(curl -s https://github.com/$ORG/$REPO/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
+VERSION=${VERSION#kustomize/}
+cd "$(mktemp -d)"
+trap "rm -r $PWD" EXIT
+curl -Ls "https://github.com/$ORG/$REPO/releases/download/kustomize%2F${VERSION}/kustomize_${VERSION}_linux_amd64.tar.gz" | tar xz
+mkdir -p /usr/local/bin
+mv kustomize /usr/local/bin/
