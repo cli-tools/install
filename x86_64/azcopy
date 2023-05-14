@@ -1,0 +1,9 @@
+#!/bin/sh -ex
+set -o noclobber
+VERSION="${VERSION:-$(curl -s https://github.com/k3s-io/k3s/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
+cd "$(mktemp -d)"
+trap "rm -r $PWD" EXIT
+curl -LOs "https://github.com/k3s-io/k3s/releases/download/${VERSION}/k3s"
+mkdir -p /usr/local/bin
+chmod +x k3s
+mv k3s /usr/local/bin/
