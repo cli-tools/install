@@ -1,0 +1,3 @@
+#!/bin/sh
+dnf copr enable varlad/helix
+dnf install helix
