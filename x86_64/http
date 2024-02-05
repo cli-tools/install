@@ -1,0 +1,7 @@
+#!/bin/sh -ex
+set -o noclobber
+cd "$(mktemp -d)"
+trap "rm -r $PWD" EXIT
+curl -LOs "packages.httpie.io/binaries/linux/http-latest"
+mkdir -p /usr/local/bin
+install http-latest /usr/local/bin/http
