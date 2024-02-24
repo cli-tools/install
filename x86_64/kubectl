@@ -3,5 +3,5 @@ set -o noclobber
 # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 DESTDIR="${DESTDIR:-/usr/local/bin}"
 VERSION="${VERSION:-$(curl -Ls https://dl.k8s.io/release/stable.txt)}"
-curl -Ls > "$DESTDIR/kubectl" "https://dl.k8s.io/release/$VERSION/bin/linux/amd64/kubectl"
+curl -Ls -o "$DESTDIR/kubectl" "https://dl.k8s.io/release/$VERSION/bin/linux/amd64/kubectl"
 chmod +x "$DESTDIR/kubectl"

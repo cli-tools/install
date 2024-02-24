@@ -1,0 +1,9 @@
+#!/bin/sh -ex
+set -o noclobber
+VERSION="${VERSION:-$(curl -s https://github.com/neovide/neovide/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
+cd "$(mktemp -d)"
+trap "rm -r $PWD" EXIT
+curl -Ls "https://github.com/neovide/neovide/releases/download/${VERSION}/neovide-linux-x86_64.tar.gz" | tar xvz
+chmod 755 neovide
+mkdir -p /usr/local/bin
+mv neovide /usr/local/bin/
