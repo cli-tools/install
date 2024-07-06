@@ -1,0 +1,10 @@
+#!/bin/sh -ex
+set -o noclobber
+DESTDIR="${DESTDIR:-/usr/local/bin}"
+VERSION="${VERSION:-$(curl -s https://github.com/kubernetes-sigs/kind/releases/latest -w '%{redirect_url}' | sed 's#https://.*/tag/##')}"
+cd "$(mktemp -d)"
+trap "rm -r $PWD" EXIT
+curl -LOs "https://github.com/kubernetes-sigs/kind/releases/download/${VERSION}/kind-linux-amd64"
+mkdir -p ${DESTDIR}
+chmod +x kind-linux-amd64
+cp -v kind-linux-amd64 ${DESTDIR}/kind
